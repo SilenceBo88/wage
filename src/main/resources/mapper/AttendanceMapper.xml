@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wage.dao.AttendanceMapper">
+  <resultMap id="BaseResultMap" type="com.wage.model.Attendance">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="a_should" jdbcType="INTEGER" property="aShould" />
+    <result column="a_real" jdbcType="INTEGER" property="aReal" />
+    <result column="a_absences" jdbcType="INTEGER" property="aAbsences" />
+    <result column="a_absences_cause" jdbcType="VARCHAR" property="aAbsencesCause" />
+    <result column="e_id" jdbcType="INTEGER" property="eId" />
+  </resultMap>
+</mapper>

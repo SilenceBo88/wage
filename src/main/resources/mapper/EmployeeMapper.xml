@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wage.dao.EmployeeMapper">
+  <resultMap id="BaseResultMap" type="com.wage.model.Employee">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="e_number" jdbcType="VARCHAR" property="eNumber" />
+    <result column="e_name" jdbcType="VARCHAR" property="eName" />
+    <result column="e_sex" jdbcType="TINYINT" property="eSex" />
+    <result column="e_title" jdbcType="VARCHAR" property="eTitle" />
+    <result column="e_ID_card" jdbcType="VARCHAR" property="eIdCard" />
+    <result column="e_bank_card" jdbcType="VARCHAR" property="eBankCard" />
+    <result column="d_id" jdbcType="INTEGER" property="dId" />
+  </resultMap>
+</mapper>

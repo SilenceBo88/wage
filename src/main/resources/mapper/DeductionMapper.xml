@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wage.dao.DeductionMapper">
+  <resultMap id="BaseResultMap" type="com.wage.model.Deduction">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="d_basic_wage" jdbcType="INTEGER" property="dBasicWage" />
+    <result column="d_bonus" jdbcType="INTEGER" property="dBonus" />
+    <result column="d_fine" jdbcType="INTEGER" property="dFine" />
+    <result column="d_tax" jdbcType="INTEGER" property="dTax" />
+    <result column="d_real_wage" jdbcType="INTEGER" property="dRealWage" />
+    <result column="e_id" jdbcType="INTEGER" property="eId" />
+  </resultMap>
+</mapper>
