@@ -2,6 +2,7 @@ package com.wage.controller;
 
 import com.wage.core.util.Result;
 import com.wage.core.util.ResultUtil;
+import com.wage.model.Admin;
 import com.wage.model.Department;
 import com.wage.model.Employee;
 import com.wage.service.DepartmentService;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -42,9 +44,16 @@ public class EmployeeController {
      */
     @GetMapping("/list")
     public String list(@RequestParam(defaultValue = "0") Integer page,
-            @RequestParam(defaultValue = "0") Integer size, Model model) throws Exception {
+                       @RequestParam(defaultValue = "0") Integer size, Model model, HttpServletRequest request) throws Exception {
+        Admin admin = (Admin) request.getSession().getAttribute("admin");
+        List<Employee> list;
+
         PageHelper.startPage(page, size);
-        List<Employee> list = employeeService.selectAll();
+        if (admin == null || admin.getType() == 0){
+            list = employeeService.selectAll();
+        }else {
+            list = employeeService.selectListBy("dId", admin.getType());
+        }
         for (Employee employee:list){
             Department department = departmentService.selectById(String.valueOf(employee.getdId()));
             employee.setDepartment(department);

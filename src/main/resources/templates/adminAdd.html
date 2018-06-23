@@ -1,0 +1,52 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+ <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <link rel="stylesheet" type="text/css" href="../static/bootstrap/css/bootstrap.min.css" th:href="@{/bootstrap/css/bootstrap.min.css}" />
+    <title>工资管理系统</title>
+    <style type="text/css"></style>
+ </head>
+ <body>
+ <div class="bread-crumb">
+     <ul class="breadcrumb">
+         <li><span class="glyphicon glyphicon-home"></span><a href="#">Home</a></li>
+         <li><a href="#">Admin</a></li>
+         <li>add</li>
+     </ul>
+ </div>
+ <div class="panle panel-info">
+     <div class="panel-heading">
+         <a class="panel-title">添加管理员</a>
+     </div>
+     <div class="container">
+         <form class="form-horizontal" th:action="@{/admin/add}" method="post" enctype="multipart/form-data">
+             <div class="form-group form-group-lg">
+                 <label for="uname" class="col-sm-2 control-label">用户名</label>
+                 <div class="col-sm-4">
+                     <input type="text" class="form-control" id="uname" name="uname" placeholder="用户名">
+                 </div>
+             </div>
+             <div class="form-group form-group-lg">
+                 <label for="pwd" class="col-sm-2 control-label">密码</label>
+                 <div class="col-sm-4">
+                     <input type="text" class="form-control" id="pwd" name="pwd" placeholder="密码">
+                 </div>
+             </div>
+             <div class="form-group form-group-lg">
+                 <label for="type" class="col-sm-2 control-label">选择部门</label>
+                 <div class="col-sm-4">
+                     <select class="form-control" id="type" name="type">
+                         <option th:each="department:${departments}" th:value="${department.id}" th:text="${department.dName}">a</option>
+                     </select>
+                 </div>
+             </div>
+             <div class="form-group form-group-lg">
+                 <div class="col-sm-offset-2 col-sm-4">
+                     <button type="submit" class="btn btn-default">添加</button>
+                 </div>
+             </div>
+         </form>
+     </div>
+ </div>
+ </body>
+</html>

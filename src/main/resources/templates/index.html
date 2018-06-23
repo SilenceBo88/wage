@@ -6,7 +6,7 @@
     <style type="text/css"></style> 
   </head> 
 
-  <body> 
+  <body>
     <!-- 导航栏部分 -->
     <div class="navbar navbar-inverse"> 
      <div class="container-fluid"> 
@@ -39,7 +39,8 @@
         <a href="#" data-toggle="dropdown"> 
          <img class="img-circle" src="../static/img/user.jpg" th:src="@{img/user.jpg}" width="30" height="30"/>
          <small>Welcome</small>
-         admin
+         <small th:if="${session.admin == null}" th:text="noLogin"></small>
+         <small th:if="${session.admin != null}" th:text="${session.admin.uname}"></small>
          <span class="caret"></span> 
         </a> 
         <ul class="nav nav-pills nav-stacked dropdown-menu"> 
@@ -56,7 +57,7 @@
          </li> 
          <li class="divider"></li> 
          <li> 
-          <a href="#"> 
+          <a th:href="@{/admin/logOut}">
            <span class="glyphicon glyphicon-off"></span> Logout 
           </a> 
          </li> 
@@ -67,7 +68,7 @@
     </div> 
 
     <!-- 页面部分 -->
-    <div class="row"> 
+    <div class="row">
      <div class="col-sm-2 left-side"> 
       <div id="search"> 
        <div class="input-group"> 
@@ -80,8 +81,8 @@
        </div>   
       </div> 
       
-      <div class="panel-group" id="box"> 
-       <div class="panel panel-info"> 
+      <div class="panel-group" id="box">
+       <div class="panel panel-info">
         <div class="panel-heading"> 
          <a href="#collapseA" data-parent="#box" data-toggle="collapse" class="panel-title">职员管理</a>
         </div> 
@@ -95,7 +96,7 @@
         </div>  
        </div>
 
-       <div class="panel panel-info"> 
+       <div class="panel panel-info" th:if="${session.admin != null && (session.admin.type == 0 || session.admin.type == 1) }">
         <div class="panel-heading"> 
          <a href="#collapseB" data-parent="#box" data-toggle="collapse" class="panel-title">部门管理</a>
         </div> 
@@ -109,7 +110,7 @@
         </div>  
        </div>
 
-       <div class="panel panel-info">
+       <div class="panel panel-info" th:if="${session.admin != null && (session.admin.type == 0 || session.admin.type == 1) }">
         <div class="panel-heading">
          <a href="#collapseC" data-parent="#box" data-toggle="collapse" class="panel-title">出勤情况管理</a>
         </div>
@@ -122,7 +123,7 @@
         </div>
        </div>
 
-       <div class="panel panel-info">
+       <div class="panel panel-info" th:if="${session.admin != null && (session.admin.type == 0 || session.admin.type == 2) }">
         <div class="panel-heading">
          <a href="#collapseD" data-parent="#box" data-toggle="collapse" class="panel-title">工资管理</a>
         </div>
@@ -131,6 +132,20 @@
           <ul class="nav nav-pills nav-stacked">
            <li><a href="attendanceList.html" th:href="@{/deduction/list(page=1,size=10)}" target="sonIframe">工资汇总表</a></li>
            <li><a href="attendanceList.html" th:href="@{/bankissued/list(page=1,size=10)}" target="sonIframe">银行发放表</a></li>
+          </ul>
+         </div>
+        </div>
+       </div>
+
+       <div class="panel panel-info" th:if="${session.admin != null && session.admin.type == 0}">
+        <div class="panel-heading">
+         <a href="#collapseE" data-parent="#box" data-toggle="collapse" class="panel-title">管理员管理</a>
+        </div>
+        <div class="panel-collapse collapse" id="collapseE">
+         <div class="panel-body">
+          <ul class="nav nav-pills nav-stacked">
+           <li><a href="departmentList.html" th:href="@{/admin/list(page=1,size=10)}" target="sonIframe">管理员列表</a></li>
+           <li><a href="departmentAdd.html" th:href="@{/admin/addPage}" target="sonIframe">管理员添加</a></li>
           </ul>
          </div>
         </div>
@@ -148,8 +163,14 @@
 
     <script type="text/javascript" src="../static/bootstrap/js/jquery.min.js" th:src="@{/bootstrap/js/jquery.min.js}"></script>
     <script type="text/javascript" src="../static/bootstrap/js/bootstrap.min.js" th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
-    <script type="text/javascript">
-
+    <script type="text/javascript" th:inline="javascript">
+        /*<![CDATA[*/
+        var v=/*[[${session.admin}]]*/   --获取session中的值
+        /*]]>*/
+        if (v == "" || v == null) {
+            alert("未登录，请前往登录！");
+            window.location.href = "/page/login";
+        }
     </script>
   </body> 
 </html> 
