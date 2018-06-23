@@ -51,6 +51,8 @@ public class Employee {
     @Column(name = "d_id")
     private Integer dId;
 
+    private Department department;
+
     /**
      * 获取主键
      *
@@ -193,5 +195,13 @@ public class Employee {
      */
     public void setdId(Integer dId) {
         this.dId = dId;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 }

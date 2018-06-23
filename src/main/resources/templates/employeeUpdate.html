@@ -1,0 +1,80 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+ <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <link rel="stylesheet" type="text/css" href="../static/bootstrap/css/bootstrap.min.css" th:href="@{/bootstrap/css/bootstrap.min.css}" />
+    <title>工资管理系统</title>
+    <style type="text/css"></style>
+ </head>
+ <body>
+ <div class="bread-crumb">
+     <ul class="breadcrumb">
+         <li><span class="glyphicon glyphicon-home"></span><a href="#">Home</a></li>
+         <li><a href="#">Employee</a></li>
+         <li>update</li>
+     </ul>
+ </div>
+ <div class="panle panel-info">
+     <div class="panel-heading">
+         <a class="panel-title">修改职员</a>
+     </div>
+     <div class="container">
+         <form class="form-horizontal" th:action="@{/employee/update}" method="post" enctype="multipart/form-data">
+             <input type="hidden" name="id" th:value="${employee.id}">
+             <div class="form-group form-group-lg">
+                 <label for="eNumber" class="col-sm-2 control-label">工号</label>
+                 <div class="col-sm-4">
+                     <input type="text" class="form-control" id="eNumber" name="eNumber" th:value="${employee.eNumber}" placeholder="工号">
+                 </div>
+             </div>
+             <div class="form-group form-group-lg">
+                 <label for="eName" class="col-sm-2 control-label">姓名</label>
+                 <div class="col-sm-4">
+                     <input type="text" class="form-control" id="eName" name="eName" th:value="${employee.eName}" placeholder="姓名">
+                 </div>
+             </div>
+             <div class="form-group form-group-lg">
+                 <label for="eSex" class="col-sm-2 control-label">性别</label>
+                 <div class="col-sm-4">
+                     <select class="form-control" id="eSex" name="eSex">
+                         <option value="0" th:selected="${employee.eSex == 0}">男</option>
+                         <option value="1" th:selected="${employee.eSex == 1}">女</option>
+                     </select>
+                 </div>
+             </div>
+             <div class="form-group form-group-lg">
+                 <label for="eTitle" class="col-sm-2 control-label">职称</label>
+                 <div class="col-sm-4">
+                     <input type="text" class="form-control" id="eTitle" name="eTitle" th:value="${employee.eTitle}" placeholder="职称">
+                 </div>
+             </div>
+             <div class="form-group form-group-lg">
+                 <label for="eIdCard" class="col-sm-2 control-label">身份证号</label>
+                 <div class="col-sm-4">
+                     <input type="text" class="form-control" id="eIdCard" name="eIdCard" th:value="${employee.eIdCard}" placeholder="身份证号">
+                 </div>
+             </div>
+             <div class="form-group form-group-lg">
+                 <label for="eBankCard" class="col-sm-2 control-label">银行卡号</label>
+                 <div class="col-sm-4">
+                     <input type="text" class="form-control" id="eBankCard" name="eBankCard" th:value="${employee.eBankCard}" placeholder="银行卡号">
+                 </div>
+             </div>
+             <div class="form-group form-group-lg">
+                 <label for="dId" class="col-sm-2 control-label">选择部门</label>
+                 <div class="col-sm-4">
+                     <select class="form-control" id="dId" name="dId">
+                         <option th:each="department:${departments}" th:value="${department.id}" th:text="${department.dName}" th:selected="${department.id == employee.dId}">a</option>
+                     </select>
+                 </div>
+             </div>
+             <div class="form-group form-group-lg">
+                 <div class="col-sm-offset-2 col-sm-4">
+                     <button type="submit" class="btn btn-default">修改</button>
+                 </div>
+             </div>
+         </form>
+     </div>
+ </div>
+ </body>
+</html>
