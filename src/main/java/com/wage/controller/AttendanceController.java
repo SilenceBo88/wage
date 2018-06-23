@@ -69,12 +69,14 @@ public class AttendanceController {
     }
 
     @PostMapping("/add")
-    public String add(Attendance attendance) throws Exception {
+    public String add(Attendance attendance, Model model) throws Exception {
         Integer state = attendanceService.insert(attendance);
         if (state == 0){
-            return "error";
+            model.addAttribute("message", "添加出勤情况失败");
+            return "message";
         }else {
-            return "redirect:/attendance/list?page=1&size=10";
+            model.addAttribute("message", "添加出勤情况成功");
+            return "message";
         }
     }
 
@@ -88,22 +90,26 @@ public class AttendanceController {
     }
 
     @PostMapping("/update")
-    public String update(Attendance attendance) throws Exception {
+    public String update(Attendance attendance, Model model) throws Exception {
         Integer state = attendanceService.update(attendance);
         if (state == 0){
-            return "error";
+            model.addAttribute("message", "修改出勤情况失败");
+            return "message";
         }else {
-            return "redirect:/attendance/list?page=1&size=10";
+            model.addAttribute("message", "修改出勤情况成功");
+            return "message";
         }
     }
 
     @GetMapping("/delete")
-    public String delete(String id) throws Exception {
+    public String delete(String id, Model model) throws Exception {
         Integer state = attendanceService.deleteById(id);
         if (state == 0){
-            return "error";
+            model.addAttribute("message", "删除出勤情况失败");
+            return "message";
         }else {
-            return "redirect:/attendance/list?page=1&size=10";
+            model.addAttribute("message", "删除出勤情况成功");
+            return "message";
         }
     }
 

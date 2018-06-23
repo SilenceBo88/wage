@@ -24,7 +24,8 @@
           <!--表头-->
           <thead> 
             <tr> 
-              <th>ID</th> 
+              <th>ID</th>
+              <th>标题</th>
               <th>工号</th>
               <th>姓名</th>
               <th>所属部门</th>
@@ -40,6 +41,7 @@
           <tbody>
             <tr th:each="attendance : ${pageInfo.list}">
               <td th:text="${attendance.id}">2</td>
+              <td th:text="${attendance.aTitle}">2</td>
               <td th:text="${attendance.employee.eNumber}">2511150243</td>
               <td th:text="${attendance.employee.eName}">张三</td>
               <td th:text="${attendance.employee.department.dName}">a</td>

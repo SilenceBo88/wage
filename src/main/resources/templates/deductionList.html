@@ -24,7 +24,8 @@
           <!--表头-->
           <thead> 
             <tr> 
-              <th>ID</th> 
+              <th>ID</th>
+              <th>标题</th>
               <th>工号</th>
               <th>姓名</th>
               <th>所属部门</th>
@@ -41,6 +42,7 @@
           <tbody>
             <tr th:each="deduction : ${pageInfo.list}">
               <td th:text="${deduction.id}">2</td>
+              <td th:text="${deduction.dTitle}">2</td>
               <td th:text="${deduction.employee.eNumber}">2511150243</td>
               <td th:text="${deduction.employee.eName}">张三</td>
               <td th:text="${deduction.employee.department.dName}">a</td>
@@ -49,9 +51,11 @@
               <td th:text="${deduction.dFine}">610602199708084415</td>
               <td th:text="${deduction.dTax}">25111502432511150243</td>
               <td th:text="${deduction.dRealWage}">25111502432511150243</td>
+              <td th:text="${deduction.dState==0}?'未确认':'已确认'">11</td>
               <td>
                 <a th:href="@{/deduction/updatePage(id=${deduction.id})}"><input type="button" value="修改" class="btn btn-warning"/></a>
                 <a th:href="@{/deduction/delete(id=${deduction.id})}"><input type="button" value="删除"onclick="javascript:return del()" class="btn btn-danger"/></a>
+                <a th:href="@{/deduction/updateState(id=${deduction.id}, dState=${deduction.dState == 0}?'1':'0')}"><input type="button" th:value="${deduction.dState == 0}?'确认':'取消确认'" class="btn btn-info"/></a>
               </td>
             </tr>
           </tbody>

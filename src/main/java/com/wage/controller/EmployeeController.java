@@ -62,12 +62,14 @@ public class EmployeeController {
     }
 
     @PostMapping("/add")
-    public String add(Employee employee) throws Exception {
+    public String add(Employee employee, Model model) throws Exception {
         Integer state = employeeService.insert(employee);
         if (state == 0){
-            return "error";
+            model.addAttribute("message", "添加职员失败");
+            return "message";
         }else {
-            return "redirect:/employee/list?page=1&size=10";
+            model.addAttribute("message", "添加职员成功");
+            return "message";
         }
     }
 
@@ -85,22 +87,26 @@ public class EmployeeController {
     }
 
     @PostMapping("/update")
-    public String update(Employee employee) throws Exception {
+    public String update(Employee employee, Model model) throws Exception {
         Integer state = employeeService.update(employee);
         if (state == 0){
-            return "error";
+            model.addAttribute("message", "修改职员失败");
+            return "message";
         }else {
-            return "redirect:/employee/list?page=1&size=10";
+            model.addAttribute("message", "修改职员成功");
+            return "message";
         }
     }
 
     @GetMapping("/delete")
-    public String delete(String id) throws Exception {
+    public String delete(String id, Model model) throws Exception {
         Integer state = employeeService.deleteById(id);
         if (state == 0){
-            return "error";
+            model.addAttribute("message", "删除职员失败");
+            return "message";
         }else {
-            return "redirect:/employee/list?page=1&size=10";
+            model.addAttribute("message", "删除职员成功");
+            return "message";
         }
     }
 

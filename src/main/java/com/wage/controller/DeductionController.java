@@ -69,14 +69,16 @@ public class DeductionController {
     }
 
     @PostMapping("/add")
-    public String add(Deduction deduction) throws Exception {
+    public String add(Deduction deduction, Model model) throws Exception {
         deduction.setdRealWage(deduction.getdBasicWage()
                 + deduction.getdBonus() - deduction.getdFine() - deduction.getdTax());
         Integer state = deductionService.insert(deduction);
         if (state == 0){
-            return "error";
+            model.addAttribute("message", "添加工资详情失败");
+            return "message";
         }else {
-            return "redirect:/deduction/list?page=1&size=10";
+            model.addAttribute("message", "添加工资详情成功");
+            return "message";
         }
     }
 
@@ -90,27 +92,43 @@ public class DeductionController {
     }
 
     @PostMapping("/update")
-    public String update(Deduction deduction) throws Exception {
+    public String update(Deduction deduction, Model model) throws Exception {
         deduction.setdRealWage(deduction.getdBasicWage()
                 + deduction.getdBonus() - deduction.getdFine() - deduction.getdTax());
         Integer state = deductionService.update(deduction);
         if (state == 0){
-            return "error";
+            model.addAttribute("message", "修改工资详情失败");
+            return "message";
         }else {
-            return "redirect:/deduction/list?page=1&size=10";
+            model.addAttribute("message", "修改工资详情成功");
+            return "message";
         }
     }
 
     @GetMapping("/delete")
-    public String delete(String id) throws Exception {
+    public String delete(String id, Model model) throws Exception {
         Integer state = deductionService.deleteById(id);
         if (state == 0){
-            return "error";
+            model.addAttribute("message", "删除工资详情失败");
+            return "message";
+        }else {
+            model.addAttribute("message", "删除工资详情成功");
+            return "message";
+        }
+    }
+
+    @GetMapping("/updateState")
+    public String updateState(String id, String dState, Model model) throws Exception {
+        Deduction deduction = deductionService.selectById(id);
+        deduction.setdState(Integer.valueOf(dState));
+        Integer state = deductionService.update(deduction);
+        if (state == 0){
+            model.addAttribute("message", "修改状态失败");
+            return "message";
         }else {
             return "redirect:/deduction/list?page=1&size=10";
         }
     }
-
     /*@PostMapping("/insert")
     public Result<Integer> insert(Deduction deduction) throws Exception{
         Integer state = deductionService.insert(deduction);

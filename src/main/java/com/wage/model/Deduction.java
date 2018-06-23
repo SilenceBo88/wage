@@ -9,6 +9,9 @@ public class Deduction {
     @Id
     private Integer id;
 
+    @Column(name = "d_title")
+    private String dTitle;
+
     /**
      * 基本工资
      */
@@ -40,6 +43,12 @@ public class Deduction {
     private Integer dRealWage;
 
     /**
+     * 是否确认
+     */
+    @Column(name = "d_state")
+    private Integer dState;
+
+    /**
      * 员工id
      */
     @Column(name = "e_id")
@@ -63,6 +72,14 @@ public class Deduction {
      */
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getdTitle() {
+        return dTitle;
+    }
+
+    public void setdTitle(String dTitle) {
+        this.dTitle = dTitle;
     }
 
     /**
@@ -153,6 +170,14 @@ public class Deduction {
      */
     public void setdRealWage(Integer dRealWage) {
         this.dRealWage = dRealWage;
+    }
+
+    public Integer getdState() {
+        return dState;
+    }
+
+    public void setdState(Integer dState) {
+        this.dState = dState;
     }
 
     /**

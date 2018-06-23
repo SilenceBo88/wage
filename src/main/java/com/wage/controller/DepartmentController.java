@@ -49,12 +49,14 @@ public class DepartmentController {
     }
 
     @PostMapping("/add")
-    public String add(Department department) throws Exception {
+    public String add(Department department, Model model) throws Exception {
         Integer state = departmentService.insert(department);
         if (state == 0){
-            return "error";
+            model.addAttribute("message", "添加部门失败");
+            return "message";
         }else {
-            return "redirect:/department/list?page=1&size=10";
+            model.addAttribute("message", "添加部门成功");
+            return "message";
         }
     }
 
@@ -66,22 +68,26 @@ public class DepartmentController {
     }
 
     @PostMapping("/update")
-    public String update(Department department) throws Exception {
+    public String update(Department department, Model model) throws Exception {
         Integer state = departmentService.update(department);
         if (state == 0){
-            return "error";
+            model.addAttribute("message", "修改部门失败");
+            return "message";
         }else {
-            return "redirect:/department/list?page=1&size=10";
+            model.addAttribute("message", "修改部门成功");
+            return "message";
         }
     }
 
     @GetMapping("/delete")
-    public String delete(String id) throws Exception {
+    public String delete(String id, Model model) throws Exception {
         Integer state = departmentService.deleteById(id);
         if (state == 0){
-            return "error";
+            model.addAttribute("message", "删除部门失败");
+            return "message";
         }else {
-            return "redirect:/department/list?page=1&size=10";
+            model.addAttribute("message", "删除部门成功");
+            return "message";
         }
     }
 

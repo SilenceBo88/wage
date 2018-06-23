@@ -6,11 +6,13 @@
       WARNING - @mbg.generated
     -->
     <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="d_title" jdbcType="VARCHAR" property="dTitle" />
     <result column="d_basic_wage" jdbcType="INTEGER" property="dBasicWage" />
     <result column="d_bonus" jdbcType="INTEGER" property="dBonus" />
     <result column="d_fine" jdbcType="INTEGER" property="dFine" />
     <result column="d_tax" jdbcType="INTEGER" property="dTax" />
     <result column="d_real_wage" jdbcType="INTEGER" property="dRealWage" />
+    <result column="d_state" jdbcType="INTEGER" property="dState" />
     <result column="e_id" jdbcType="INTEGER" property="eId" />
   </resultMap>
 </mapper>

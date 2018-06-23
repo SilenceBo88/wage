@@ -23,6 +23,12 @@
              <input type="hidden" name="id" th:value="${deduction.id}">
              <input type="hidden" name="eId" th:value="${deduction.eId}">
              <div class="form-group form-group-lg">
+                 <label for="dTitle" class="col-sm-2 control-label">标题</label>
+                 <div class="col-sm-4">
+                     <input type="text" class="form-control" id="dTitle" name="dTitle" placeholder="标题" th:value="${deduction.dTitle}">
+                 </div>
+             </div>
+             <div class="form-group form-group-lg">
                  <label for="eNumber" class="col-sm-2 control-label">工号</label>
                  <div class="col-sm-4">
                      <input type="text" class="form-control" id="eNumber" th:value="${deduction.employee.eNumber}" readonly="readonly">

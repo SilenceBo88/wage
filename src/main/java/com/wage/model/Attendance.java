@@ -10,6 +10,12 @@ public class Attendance {
     private Integer id;
 
     /**
+     * 标题
+     */
+    @Column(name = "a_title")
+    private String aTitle;
+
+    /**
      * 应出勤次数/月
      */
     @Column(name = "a_should")
@@ -57,6 +63,14 @@ public class Attendance {
      */
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getaTitle() {
+        return aTitle;
+    }
+
+    public void setaTitle(String aTitle) {
+        this.aTitle = aTitle;
     }
 
     /**

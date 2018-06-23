@@ -48,7 +48,7 @@ public class BankissuedController {
     public String list(@RequestParam(defaultValue = "0") Integer page,
                        @RequestParam(defaultValue = "0") Integer size, Model model) throws Exception {
         PageHelper.startPage(page, size);
-        List<Deduction> list = deductionService.selectAll();
+        List<Deduction> list = deductionService.selectListBy("dState", 1);
         for (Deduction deduction:list){
             Employee employee = employeeService.selectById(String.valueOf(deduction.geteId()));
             Department department = departmentService.selectById(String.valueOf(employee.getdId()));

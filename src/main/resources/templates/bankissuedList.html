@@ -24,7 +24,8 @@
           <!--表头-->
           <thead> 
             <tr> 
-              <th>ID</th> 
+              <th>ID</th>
+              <th>标题</th>
               <th>工号</th>
               <th>姓名</th>
               <th>所属部门</th>
@@ -38,6 +39,7 @@
           <tbody>
             <tr th:each="deduction : ${pageInfo.list}">
               <td th:text="${deduction.id}">2</td>
+              <td th:text="${deduction.dTitle}">2</td>
               <td th:text="${deduction.employee.eNumber}">2511150243</td>
               <td th:text="${deduction.employee.eName}">张三</td>
               <td th:text="${deduction.employee.department.dName}">a</td>
@@ -52,10 +54,10 @@
             <tr> 
               <td colspan="8">
                 <ul class="pagination">
-                  <li><a th:href="@{/deduction/list(page=1,size=10)}">首页</a></li>
+                  <li><a th:href="@{/bankissued/list(page=1,size=10)}">首页</a></li>
 
                   <li>
-                    <a th:if="${not pageInfo.isFirstPage}" th:href="@{/deduction/list(page=${pageInfo.pageNum - 1 },size=10)}">&laquo;</a>
+                    <a th:if="${not pageInfo.isFirstPage}" th:href="@{/bankissued/list(page=${pageInfo.pageNum - 1 },size=10)}">&laquo;</a>
                     <a th:if="${pageInfo.isFirstPage}" href="javascript:void(0);">&laquo;</a>
                   </li>
 
@@ -64,17 +66,17 @@
                       <span th:text="${pageNo}"></span>
                     </a>
 
-                    <a th:if="${not (pageInfo.pageNum eq pageNo)}"th:href="@{/deduction/list(page=${pageNo},size=10)}">
+                    <a th:if="${not (pageInfo.pageNum eq pageNo)}"th:href="@{/bankissued/list(page=${pageNo},size=10)}">
                       <span th:text="${pageNo}"></span>
                     </a>
                   </li>
 
                   <li>
-                    <a th:if="${not pageInfo.isLastPage}" th:href="@{/deduction/list(page=${pageInfo.pageNum + 1 },size=10)}">&raquo;</a>
+                    <a th:if="${not pageInfo.isLastPage}" th:href="@{/bankissued/list(page=${pageInfo.pageNum + 1 },size=10)}">&raquo;</a>
                     <a th:if="${pageInfo.isLastPage}" href="javascript:void(0);">&raquo;</a>
                   </li>
 
-                  <li><a th:href="@{/deduction/list(page=${pageInfo.pages },size=10)}">尾页</a></li>
+                  <li><a th:href="@{/bankissued/list(page=${pageInfo.pages },size=10)}">尾页</a></li>
                 </ul>
               </td> 
             </tr> 
