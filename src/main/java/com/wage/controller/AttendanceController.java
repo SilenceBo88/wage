@@ -3,9 +3,15 @@ package com.wage.controller;
 import com.wage.core.util.Result;
 import com.wage.core.util.ResultUtil;
 import com.wage.model.Attendance;
+import com.wage.model.Department;
+import com.wage.model.Employee;
 import com.wage.service.AttendanceService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.wage.service.DepartmentService;
+import com.wage.service.EmployeeService;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,14 +26,88 @@ import java.util.List;
 * @author zb
 * @date 2018/06/22 14:23
 */
-@RestController
+@Controller
 @RequestMapping("/attendance")
 public class AttendanceController {
 
     @Resource
     private AttendanceService attendanceService;
 
-    @PostMapping("/insert")
+    @Resource
+    private EmployeeService employeeService;
+
+    @Resource
+    private DepartmentService departmentService;
+
+    /**
+     * @Description: 分页查询
+     * @param page 页码
+     * @param size 每页条数
+     * @Reutrn RetResult<PageInfo<Attendance>>
+     */
+    @GetMapping("/list")
+    public String list(@RequestParam(defaultValue = "0") Integer page,
+                       @RequestParam(defaultValue = "0") Integer size, Model model) throws Exception {
+        PageHelper.startPage(page, size);
+        List<Attendance> list = attendanceService.selectAll();
+        for (Attendance attendance:list){
+            Employee employee = employeeService.selectById(String.valueOf(attendance.geteId()));
+            Department department = departmentService.selectById(String.valueOf(employee.getdId()));
+            employee.setDepartment(department);
+            attendance.setEmployee(employee);
+        }
+        PageInfo<Attendance> pageInfo = new PageInfo<Attendance>(list);
+        model.addAttribute("pageInfo", pageInfo);
+        return "attendanceList";
+    }
+
+    @GetMapping("/addPage")
+    public String addPage(Model model, String id) throws Exception {
+        Employee employee = employeeService.selectById(id);
+        model.addAttribute("employee", employee);
+        return "attendanceAdd";
+    }
+
+    @PostMapping("/add")
+    public String add(Attendance attendance) throws Exception {
+        Integer state = attendanceService.insert(attendance);
+        if (state == 0){
+            return "error";
+        }else {
+            return "redirect:/attendance/list?page=1&size=10";
+        }
+    }
+
+    @GetMapping("/updatePage")
+    public String updatePage(Model model, String id) throws Exception {
+        Attendance attendance = attendanceService.selectById(id);
+        Employee employee = employeeService.selectById(String.valueOf(attendance.geteId()));
+        attendance.setEmployee(employee);
+        model.addAttribute("attendance", attendance);
+        return "attendanceUpdate";
+    }
+
+    @PostMapping("/update")
+    public String update(Attendance attendance) throws Exception {
+        Integer state = attendanceService.update(attendance);
+        if (state == 0){
+            return "error";
+        }else {
+            return "redirect:/attendance/list?page=1&size=10";
+        }
+    }
+
+    @GetMapping("/delete")
+    public String delete(String id) throws Exception {
+        Integer state = attendanceService.deleteById(id);
+        if (state == 0){
+            return "error";
+        }else {
+            return "redirect:/attendance/list?page=1&size=10";
+        }
+    }
+
+    /*@PostMapping("/insert")
     public Result<Integer> insert(Attendance attendance) throws Exception{
         Integer state = attendanceService.insert(attendance);
         return ResultUtil.SUCCESS(state);
@@ -51,12 +131,12 @@ public class AttendanceController {
         return ResultUtil.SUCCESS(attendance);
     }
 
-    /**
+    *//*
     * @Description: 分页查询
     * @param page 页码
     * @param size 每页条数
     * @Reutrn RetResult<PageInfo<Attendance>>
-    */
+    *//*
     @GetMapping("/list")
     public Result<PageInfo<Attendance>> list(@RequestParam(defaultValue = "0") Integer page,
             @RequestParam(defaultValue = "0") Integer size) throws Exception {
@@ -64,5 +144,5 @@ public class AttendanceController {
         List<Attendance> list = attendanceService.selectAll();
         PageInfo<Attendance> pageInfo = new PageInfo<Attendance>(list);
         return ResultUtil.SUCCESS(pageInfo);
-    }
+    }*/
 }

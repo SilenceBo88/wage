@@ -1,11 +1,11 @@
 package com.wage.controller;
 
-import com.wage.core.util.Result;
-import com.wage.core.util.ResultUtil;
+import com.github.pagehelper.PageHelper;
 import com.wage.model.Department;
 import com.wage.service.DepartmentService;
-import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,14 +20,72 @@ import java.util.List;
 * @author zb
 * @date 2018/06/22 14:21
 */
-@RestController
+@Controller
 @RequestMapping("/department")
 public class DepartmentController {
 
     @Resource
     private DepartmentService departmentService;
 
-    @PostMapping("/insert")
+    /**
+     * @Description: 分页查询
+     * @param page 页码
+     * @param size 每页条数
+     * @Reutrn RetResult<PageInfo<Department>>
+     */
+    @GetMapping("/list")
+    public String list(@RequestParam(defaultValue = "0") Integer page,
+                       @RequestParam(defaultValue = "0") Integer size, Model model) throws Exception {
+        PageHelper.startPage(page, size);
+        List<Department> list = departmentService.selectAll();
+        PageInfo<Department> pageInfo = new PageInfo<Department>(list);
+        model.addAttribute("pageInfo", pageInfo);
+        return "departmentList";
+    }
+
+    @GetMapping("/addPage")
+    public String addPage() throws Exception {
+        return "departmentAdd";
+    }
+
+    @PostMapping("/add")
+    public String add(Department department) throws Exception {
+        Integer state = departmentService.insert(department);
+        if (state == 0){
+            return "error";
+        }else {
+            return "redirect:/department/list?page=1&size=10";
+        }
+    }
+
+    @GetMapping("/updatePage")
+    public String updatePage(Model model, String id) throws Exception {
+        Department department = departmentService.selectById(id);
+        model.addAttribute("department", department);
+        return "departmentUpdate";
+    }
+
+    @PostMapping("/update")
+    public String update(Department department) throws Exception {
+        Integer state = departmentService.update(department);
+        if (state == 0){
+            return "error";
+        }else {
+            return "redirect:/department/list?page=1&size=10";
+        }
+    }
+
+    @GetMapping("/delete")
+    public String delete(String id) throws Exception {
+        Integer state = departmentService.deleteById(id);
+        if (state == 0){
+            return "error";
+        }else {
+            return "redirect:/department/list?page=1&size=10";
+        }
+    }
+
+    /*@PostMapping("/insert")
     public Result<Integer> insert(Department department) throws Exception{
         Integer state = departmentService.insert(department);
         return ResultUtil.SUCCESS(state);
@@ -51,12 +109,12 @@ public class DepartmentController {
         return ResultUtil.SUCCESS(department);
     }
 
-    /**
+    *//*
     * @Description: 分页查询
     * @param page 页码
     * @param size 每页条数
     * @Reutrn RetResult<PageInfo<Department>>
-    */
+    *//*
     @GetMapping("/list")
     public Result<PageInfo<Department>> list(@RequestParam(defaultValue = "0") Integer page,
             @RequestParam(defaultValue = "0") Integer size) throws Exception {
@@ -64,5 +122,5 @@ public class DepartmentController {
         List<Department> list = departmentService.selectAll();
         PageInfo<Department> pageInfo = new PageInfo<Department>(list);
         return ResultUtil.SUCCESS(pageInfo);
-    }
+    }*/
 }

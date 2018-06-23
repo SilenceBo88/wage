@@ -2,10 +2,16 @@ package com.wage.controller;
 
 import com.wage.core.util.Result;
 import com.wage.core.util.ResultUtil;
-import com.wage.model.Bankissued;
-import com.wage.service.BankissuedService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.wage.model.Deduction;
+import com.wage.model.Department;
+import com.wage.model.Employee;
+import com.wage.service.DeductionService;
+import com.wage.service.DepartmentService;
+import com.wage.service.EmployeeService;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,53 +22,41 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
-* @Description: BankissuedController类
+* @Description: BankissuedController
 * @author zb
 * @date 2018/06/22 14:24
 */
-@RestController
+@Controller
 @RequestMapping("/bankissued")
 public class BankissuedController {
+    @Resource
+    private DeductionService deductionService;
 
     @Resource
-    private BankissuedService bankissuedService;
+    private EmployeeService employeeService;
 
-    @PostMapping("/insert")
-    public Result<Integer> insert(Bankissued bankissued) throws Exception{
-        Integer state = bankissuedService.insert(bankissued);
-        return ResultUtil.SUCCESS(state);
-    }
-
-    @PostMapping("/deleteById")
-    public Result<Integer> deleteById(@RequestParam String id) throws Exception {
-        Integer state = bankissuedService.deleteById(id);
-        return ResultUtil.SUCCESS(state);
-    }
-
-    @PostMapping("/update")
-    public Result<Integer> update(Bankissued bankissued) throws Exception {
-        Integer state = bankissuedService.update(bankissued);
-        return ResultUtil.SUCCESS(state);
-    }
-
-    @GetMapping("/selectById")
-    public Result<Bankissued> selectById(@RequestParam String id) throws Exception {
-        Bankissued bankissued = bankissuedService.selectById(id);
-        return ResultUtil.SUCCESS(bankissued);
-    }
+    @Resource
+    private DepartmentService departmentService;
 
     /**
-    * @Description: 分页查询
-    * @param page 页码
-    * @param size 每页条数
-    * @Reutrn RetResult<PageInfo<Bankissued>>
-    */
+     * @Description: 分页查询
+     * @param page 页码
+     * @param size 每页条数
+     * @Reutrn RetResult<PageInfo<Deduction>>
+     */
     @GetMapping("/list")
-    public Result<PageInfo<Bankissued>> list(@RequestParam(defaultValue = "0") Integer page,
-            @RequestParam(defaultValue = "0") Integer size) throws Exception {
+    public String list(@RequestParam(defaultValue = "0") Integer page,
+                       @RequestParam(defaultValue = "0") Integer size, Model model) throws Exception {
         PageHelper.startPage(page, size);
-        List<Bankissued> list = bankissuedService.selectAll();
-        PageInfo<Bankissued> pageInfo = new PageInfo<Bankissued>(list);
-        return ResultUtil.SUCCESS(pageInfo);
+        List<Deduction> list = deductionService.selectAll();
+        for (Deduction deduction:list){
+            Employee employee = employeeService.selectById(String.valueOf(deduction.geteId()));
+            Department department = departmentService.selectById(String.valueOf(employee.getdId()));
+            employee.setDepartment(department);
+            deduction.setEmployee(employee);
+        }
+        PageInfo<Deduction> pageInfo = new PageInfo<Deduction>(list);
+        model.addAttribute("pageInfo", pageInfo);
+        return "bankissuedList";
     }
 }

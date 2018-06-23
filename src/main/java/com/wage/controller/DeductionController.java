@@ -3,9 +3,15 @@ package com.wage.controller;
 import com.wage.core.util.Result;
 import com.wage.core.util.ResultUtil;
 import com.wage.model.Deduction;
+import com.wage.model.Department;
+import com.wage.model.Employee;
 import com.wage.service.DeductionService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.wage.service.DepartmentService;
+import com.wage.service.EmployeeService;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,14 +26,92 @@ import java.util.List;
 * @author zb
 * @date 2018/06/22 14:23
 */
-@RestController
+@Controller
 @RequestMapping("/deduction")
 public class DeductionController {
 
     @Resource
     private DeductionService deductionService;
 
-    @PostMapping("/insert")
+    @Resource
+    private EmployeeService employeeService;
+
+    @Resource
+    private DepartmentService departmentService;
+
+    /**
+     * @Description: 分页查询
+     * @param page 页码
+     * @param size 每页条数
+     * @Reutrn RetResult<PageInfo<Deduction>>
+     */
+    @GetMapping("/list")
+    public String list(@RequestParam(defaultValue = "0") Integer page,
+                       @RequestParam(defaultValue = "0") Integer size, Model model) throws Exception {
+        PageHelper.startPage(page, size);
+        List<Deduction> list = deductionService.selectAll();
+        for (Deduction deduction:list){
+            Employee employee = employeeService.selectById(String.valueOf(deduction.geteId()));
+            Department department = departmentService.selectById(String.valueOf(employee.getdId()));
+            employee.setDepartment(department);
+            deduction.setEmployee(employee);
+        }
+        PageInfo<Deduction> pageInfo = new PageInfo<Deduction>(list);
+        model.addAttribute("pageInfo", pageInfo);
+        return "deductionList";
+    }
+
+    @GetMapping("/addPage")
+    public String addPage(Model model, String id) throws Exception {
+        Employee employee = employeeService.selectById(id);
+        model.addAttribute("employee", employee);
+        return "deductionAdd";
+    }
+
+    @PostMapping("/add")
+    public String add(Deduction deduction) throws Exception {
+        deduction.setdRealWage(deduction.getdBasicWage()
+                + deduction.getdBonus() - deduction.getdFine() - deduction.getdTax());
+        Integer state = deductionService.insert(deduction);
+        if (state == 0){
+            return "error";
+        }else {
+            return "redirect:/deduction/list?page=1&size=10";
+        }
+    }
+
+    @GetMapping("/updatePage")
+    public String updatePage(Model model, String id) throws Exception {
+        Deduction deduction = deductionService.selectById(id);
+        Employee employee = employeeService.selectById(String.valueOf(deduction.geteId()));
+        deduction.setEmployee(employee);
+        model.addAttribute("deduction", deduction);
+        return "deductionUpdate";
+    }
+
+    @PostMapping("/update")
+    public String update(Deduction deduction) throws Exception {
+        deduction.setdRealWage(deduction.getdBasicWage()
+                + deduction.getdBonus() - deduction.getdFine() - deduction.getdTax());
+        Integer state = deductionService.update(deduction);
+        if (state == 0){
+            return "error";
+        }else {
+            return "redirect:/deduction/list?page=1&size=10";
+        }
+    }
+
+    @GetMapping("/delete")
+    public String delete(String id) throws Exception {
+        Integer state = deductionService.deleteById(id);
+        if (state == 0){
+            return "error";
+        }else {
+            return "redirect:/deduction/list?page=1&size=10";
+        }
+    }
+
+    /*@PostMapping("/insert")
     public Result<Integer> insert(Deduction deduction) throws Exception{
         Integer state = deductionService.insert(deduction);
         return ResultUtil.SUCCESS(state);
@@ -51,12 +135,12 @@ public class DeductionController {
         return ResultUtil.SUCCESS(deduction);
     }
 
-    /**
+    *//*
     * @Description: 分页查询
     * @param page 页码
     * @param size 每页条数
     * @Reutrn RetResult<PageInfo<Deduction>>
-    */
+    *//*
     @GetMapping("/list")
     public Result<PageInfo<Deduction>> list(@RequestParam(defaultValue = "0") Integer page,
             @RequestParam(defaultValue = "0") Integer size) throws Exception {
@@ -64,5 +148,5 @@ public class DeductionController {
         List<Deduction> list = deductionService.selectAll();
         PageInfo<Deduction> pageInfo = new PageInfo<Deduction>(list);
         return ResultUtil.SUCCESS(pageInfo);
-    }
+    }*/
 }

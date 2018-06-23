@@ -45,6 +45,8 @@ public class Deduction {
     @Column(name = "e_id")
     private Integer eId;
 
+    private Employee employee;
+
     /**
      * 获取主键
      *
@@ -169,5 +171,13 @@ public class Deduction {
      */
     public void seteId(Integer eId) {
         this.eId = eId;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 }

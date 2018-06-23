@@ -97,13 +97,13 @@
 
        <div class="panel panel-info"> 
         <div class="panel-heading"> 
-         <a href="#collapseB" data-parent="#box" data-toggle="collapse" class="panel-title">线路管理</a>
+         <a href="#collapseB" data-parent="#box" data-toggle="collapse" class="panel-title">部门管理</a>
         </div> 
         <div class="panel-collapse collapse" id="collapseB"> 
          <div class="panel-body"> 
           <ul class="nav nav-pills nav-stacked"> 
-           <li><a href="${APP_PATH}/Line/all" target="sonIframe">线路列表</a></li>
-           <li><a href="lineAdd.jsp" target="sonIframe">线路添加</a></li>
+           <li><a href="departmentList.html" th:href="@{/department/list(page=1,size=10)}" target="sonIframe">部门列表</a></li>
+           <li><a href="departmentAdd.html" th:href="@{/department/addPage}" target="sonIframe">部门添加</a></li>
           </ul>
          </div> 
         </div>  
@@ -111,17 +111,31 @@
 
        <div class="panel panel-info">
         <div class="panel-heading">
-         <a href="#collapseF" data-parent="#box" data-toggle="collapse" class="panel-title">通知管理</a>
+         <a href="#collapseC" data-parent="#box" data-toggle="collapse" class="panel-title">出勤情况管理</a>
         </div>
-        <div class="panel-collapse collapse" id="collapseF">
+        <div class="panel-collapse collapse" id="collapseC">
          <div class="panel-body">
           <ul class="nav nav-pills nav-stacked">
-           <li><a href="${APP_PATH}/Notice/all" target="sonIframe">通知列表</a></li>
-           <li><a href="noticeAdd.jsp" target="sonIframe">添加通知</a></li>
+           <li><a href="attendanceList.html" th:href="@{/attendance/list(page=1,size=10)}" target="sonIframe">出勤汇总表</a></li>
           </ul>
          </div>
         </div>
        </div>
+
+       <div class="panel panel-info">
+        <div class="panel-heading">
+         <a href="#collapseD" data-parent="#box" data-toggle="collapse" class="panel-title">工资管理</a>
+        </div>
+        <div class="panel-collapse collapse" id="collapseD">
+         <div class="panel-body">
+          <ul class="nav nav-pills nav-stacked">
+           <li><a href="attendanceList.html" th:href="@{/deduction/list(page=1,size=10)}" target="sonIframe">工资汇总表</a></li>
+           <li><a href="attendanceList.html" th:href="@{/bankissued/list(page=1,size=10)}" target="sonIframe">银行发放表</a></li>
+          </ul>
+         </div>
+        </div>
+       </div>
+
       </div> 
      </div>
 

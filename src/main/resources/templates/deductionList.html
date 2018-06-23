@@ -11,13 +11,13 @@
     <div class="bread-crumb"> 
       <ul class="breadcrumb">
         <li><span class="glyphicon glyphicon-home"></span><a href="#">Home</a></li> 
-        <li><a href="#">Employee</a></li>
+        <li><a href="#">Deduction</a></li>
         <li>list</li>
       </ul> 
     </div> 
     <div class="panle panel-info"> 
       <div class="panel-heading"> 
-        <a class="panel-title">职员列表</a>
+        <a class="panel-title">工资汇总表</a>
       </div> 
       <div class="panel-body">
         <table class="table table-striped table-hover">
@@ -27,30 +27,31 @@
               <th>ID</th> 
               <th>工号</th>
               <th>姓名</th>
-              <th>性别</th>
-              <th>职级</th>
-              <th>身份证号</th>
-              <th>银行卡号</th>
               <th>所属部门</th>
+              <th>基本工资</th>
+              <th>奖金</th>
+              <th>罚金</th>
+              <th>税金</th>
+              <th>实际工资</th>
               <th>操作</th>
             </tr> 
           </thead>
 
           <!--显示数据-->
           <tbody>
-            <tr th:each="employee : ${pageInfo.list}">
-              <td th:text="${employee.id}">2</td>
-              <td th:text="${employee.eNumber}">2511150243</td>
-              <td th:text="${employee.eName}">张三</td>
-              <td th:text="${employee.eSex==0}?'男':'女'">男</td>
-              <td th:text="${employee.eTitle}">教授</td>
-              <td th:text="${employee.eIdCard}">610602199708084415</td>
-              <td th:text="${employee.eBankCard}">25111502432511150243</td>
-              <td th:text="${employee.department.dName}">a</td>
+            <tr th:each="deduction : ${pageInfo.list}">
+              <td th:text="${deduction.id}">2</td>
+              <td th:text="${deduction.employee.eNumber}">2511150243</td>
+              <td th:text="${deduction.employee.eName}">张三</td>
+              <td th:text="${deduction.employee.department.dName}">a</td>
+              <td th:text="${deduction.dBasicWage}">男</td>
+              <td th:text="${deduction.dBonus}">教授</td>
+              <td th:text="${deduction.dFine}">610602199708084415</td>
+              <td th:text="${deduction.dTax}">25111502432511150243</td>
+              <td th:text="${deduction.dRealWage}">25111502432511150243</td>
               <td>
-                <a th:href="@{/employee/updatePage(id=${employee.id})}"><input type="button" value="修改" class="btn btn-warning"/></a>
-                <a th:href="@{/employee/delete(id=${employee.id})}"><input type="button" value="删除"onclick="javascript:return del()" class="btn btn-danger"/></a>
-                <a th:href="@{/attendance/addPage(id=${employee.id})}"><input type="button" value="添加出勤情况" class="btn btn-info"/></a>
+                <a th:href="@{/deduction/updatePage(id=${deduction.id})}"><input type="button" value="修改" class="btn btn-warning"/></a>
+                <a th:href="@{/deduction/delete(id=${deduction.id})}"><input type="button" value="删除"onclick="javascript:return del()" class="btn btn-danger"/></a>
               </td>
             </tr>
           </tbody>
@@ -60,10 +61,10 @@
             <tr> 
               <td colspan="8">
                 <ul class="pagination">
-                  <li><a th:href="@{/employee/list(page=1,size=10)}">首页</a></li>
+                  <li><a th:href="@{/deduction/list(page=1,size=10)}">首页</a></li>
 
                   <li>
-                    <a th:if="${not pageInfo.isFirstPage}" th:href="@{/employee/list(page=${pageInfo.pageNum - 1 },size=10)}">&laquo;</a>
+                    <a th:if="${not pageInfo.isFirstPage}" th:href="@{/deduction/list(page=${pageInfo.pageNum - 1 },size=10)}">&laquo;</a>
                     <a th:if="${pageInfo.isFirstPage}" href="javascript:void(0);">&laquo;</a>
                   </li>
 
@@ -72,17 +73,17 @@
                       <span th:text="${pageNo}"></span>
                     </a>
 
-                    <a th:if="${not (pageInfo.pageNum eq pageNo)}"th:href="@{/employee/list(page=${pageNo},size=10)}">
+                    <a th:if="${not (pageInfo.pageNum eq pageNo)}"th:href="@{/deduction/list(page=${pageNo},size=10)}">
                       <span th:text="${pageNo}"></span>
                     </a>
                   </li>
 
                   <li>
-                    <a th:if="${not pageInfo.isLastPage}" th:href="@{/employee/list(page=${pageInfo.pageNum + 1 },size=10)}">&raquo;</a>
+                    <a th:if="${not pageInfo.isLastPage}" th:href="@{/deduction/list(page=${pageInfo.pageNum + 1 },size=10)}">&raquo;</a>
                     <a th:if="${pageInfo.isLastPage}" href="javascript:void(0);">&raquo;</a>
                   </li>
 
-                  <li><a th:href="@{/employee/list(page=${pageInfo.pages },size=10)}">尾页</a></li>
+                  <li><a th:href="@{/deduction/list(page=${pageInfo.pages },size=10)}">尾页</a></li>
                 </ul>
               </td> 
             </tr> 

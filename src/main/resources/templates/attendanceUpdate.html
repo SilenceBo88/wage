@@ -1,0 +1,70 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+ <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <link rel="stylesheet" type="text/css" href="../static/bootstrap/css/bootstrap.min.css" th:href="@{/bootstrap/css/bootstrap.min.css}" />
+    <title>工资管理系统</title>
+    <style type="text/css"></style>
+ </head>
+ <body>
+ <div class="bread-crumb">
+     <ul class="breadcrumb">
+         <li><span class="glyphicon glyphicon-home"></span><a href="#">Home</a></li>
+         <li><a href="#">Attendance</a></li>
+         <li>update</li>
+     </ul>
+ </div>
+ <div class="panle panel-info">
+     <div class="panel-heading">
+         <a class="panel-title">修改职员</a>
+     </div>
+     <div class="container">
+         <form class="form-horizontal" th:action="@{/attendance/update}" method="post" enctype="multipart/form-data">
+             <input type="hidden" name="id" th:value="${attendance.id}">
+             <input type="hidden" name="eId" th:value="${attendance.eId}">
+             <div class="form-group form-group-lg">
+                 <label for="eNumber" class="col-sm-2 control-label">工号</label>
+                 <div class="col-sm-4">
+                     <input type="text" class="form-control" id="eNumber" th:value="${attendance.employee.eNumber}" readonly="readonly">
+                 </div>
+             </div>
+             <div class="form-group form-group-lg">
+                 <label for="eName" class="col-sm-2 control-label">姓名</label>
+                 <div class="col-sm-4">
+                     <input type="text" class="form-control" id="eName" th:value="${attendance.employee.eName}" readonly="readonly">
+                 </div>
+             </div>
+             <div class="form-group form-group-lg">
+                 <label for="aShould" class="col-sm-2 control-label">应出勤次数/月</label>
+                 <div class="col-sm-4">
+                     <input type="text" class="form-control" id="aShould" name="aShould" placeholder="应出勤次数/月" th:value="${attendance.aShould}">
+                 </div>
+             </div>
+             <div class="form-group form-group-lg">
+                 <label for="aReal" class="col-sm-2 control-label">实际出勤次数/月</label>
+                 <div class="col-sm-4">
+                     <input type="text" class="form-control" id="aReal" name="aReal" placeholder="实际出勤次数/月" th:value="${attendance.aReal}">
+                 </div>
+             </div>
+             <div class="form-group form-group-lg">
+                 <label for="aAbsences" class="col-sm-2 control-label">缺勤次数</label>
+                 <div class="col-sm-4">
+                     <input type="text" class="form-control" id="aAbsences" name="aAbsences" placeholder="缺勤次数" th:value="${attendance.aAbsences}">
+                 </div>
+             </div>
+             <div class="form-group form-group-lg">
+                 <label for="aAbsencesCause" class="col-sm-2 control-label">缺勤原因</label>
+                 <div class="col-sm-4">
+                     <input type="text" class="form-control" id="aAbsencesCause" name="aAbsencesCause" placeholder="缺勤原因" th:value="${attendance.aAbsencesCause}">
+                 </div>
+             </div>
+             <div class="form-group form-group-lg">
+                 <div class="col-sm-offset-2 col-sm-4">
+                     <button type="submit" class="btn btn-default">修改</button>
+                 </div>
+             </div>
+         </form>
+     </div>
+ </div>
+ </body>
+</html>
