@@ -57,6 +57,9 @@ public class AttendanceController {
             attendance.setEmployee(employee);
         }
         PageInfo<Attendance> pageInfo = new PageInfo<Attendance>(list);
+
+        List<Attendance> titles = attendanceService.selectTitles();
+        model.addAttribute("titles", titles);
         model.addAttribute("pageInfo", pageInfo);
         return "attendanceList";
     }
@@ -70,6 +73,7 @@ public class AttendanceController {
 
     @PostMapping("/add")
     public String add(Attendance attendance, Model model) throws Exception {
+        attendance.setaAbsences(attendance.getaShould() - attendance.getaReal());
         Integer state = attendanceService.insert(attendance);
         if (state == 0){
             model.addAttribute("message", "添加出勤情况失败");
@@ -91,6 +95,7 @@ public class AttendanceController {
 
     @PostMapping("/update")
     public String update(Attendance attendance, Model model) throws Exception {
+        attendance.setaAbsences(attendance.getaShould() - attendance.getaReal());
         Integer state = attendanceService.update(attendance);
         if (state == 0){
             model.addAttribute("message", "修改出勤情况失败");

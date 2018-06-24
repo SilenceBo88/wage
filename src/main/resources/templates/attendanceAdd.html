@@ -24,7 +24,11 @@
              <div class="form-group form-group-lg">
                  <label for="aTitle" class="col-sm-2 control-label">标题</label>
                  <div class="col-sm-4">
-                     <input type="text" class="form-control" id="aTitle" name="aTitle" placeholder="标题">
+                     <select class="form-control" id="aTitle" name="aTitle">
+                         <option id="op1">1</option>
+                         <option id="op2">2</option>
+                         <option id="op3">3</option>
+                     </select>
                  </div>
              </div>
              <div class="form-group form-group-lg">
@@ -52,12 +56,6 @@
                  </div>
              </div>
              <div class="form-group form-group-lg">
-                 <label for="aAbsences" class="col-sm-2 control-label">缺勤次数</label>
-                 <div class="col-sm-4">
-                     <input type="text" class="form-control" id="aAbsences" name="aAbsences" placeholder="缺勤次数">
-                 </div>
-             </div>
-             <div class="form-group form-group-lg">
                  <label for="aAbsencesCause" class="col-sm-2 control-label">缺勤原因</label>
                  <div class="col-sm-4">
                      <input type="text" class="form-control" id="aAbsencesCause" name="aAbsencesCause" placeholder="缺勤原因">
@@ -71,5 +69,20 @@
          </form>
      </div>
  </div>
+ <script type="text/javascript" src="../static/bootstrap/js/jquery.min.js" th:src="@{/bootstrap/js/jquery.min.js}"></script>
+ <script type="text/javascript" src="../static/bootstrap/js/bootstrap.min.js" th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+ <script type="text/javascript" >
+     var mydate = new Date();
+     var y = mydate.getFullYear();
+     var m = mydate.getMonth() + 1;
+
+     var text1 = y + "年" + (m-2) + "月出勤情况";
+     var text2 = y + "年" + (m-1) + "月出勤情况";
+     var text3 = y + "年" + m + "月出勤情况";
+
+     $("#op1").text(text1).attr("value",text1);
+     $("#op2").text(text2).attr("value",text2);
+     $("#op3").text(text3).attr("value",text3);
+ </script>
  </body>
 </html>

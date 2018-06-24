@@ -7,6 +7,7 @@ import com.wage.core.common.AbstractService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
 * @Description: AttendanceService接口实现类
@@ -19,4 +20,8 @@ public class AttendanceServiceImpl extends AbstractService<Attendance> implement
     @Resource
     private AttendanceMapper attendanceMapper;
 
+    @Override
+    public List<Attendance> selectTitles() {
+        return attendanceMapper.selectTitles();
+    }
 }

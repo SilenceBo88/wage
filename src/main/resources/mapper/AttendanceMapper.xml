@@ -13,4 +13,8 @@
     <result column="a_absences_cause" jdbcType="VARCHAR" property="aAbsencesCause" />
     <result column="e_id" jdbcType="INTEGER" property="eId" />
   </resultMap>
+
+  <select id="selectTitles" resultMap="BaseResultMap">
+    SELECT DISTINCT a_title FROM attendance
+  </select>
 </mapper>

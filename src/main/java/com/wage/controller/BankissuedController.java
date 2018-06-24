@@ -56,6 +56,8 @@ public class BankissuedController {
             deduction.setEmployee(employee);
         }
         PageInfo<Deduction> pageInfo = new PageInfo<Deduction>(list);
+        List<Deduction> titles = deductionService.selectTitlesByState();
+        model.addAttribute("titles", titles);
         model.addAttribute("pageInfo", pageInfo);
         return "bankissuedList";
     }

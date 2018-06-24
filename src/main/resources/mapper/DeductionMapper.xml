@@ -15,4 +15,17 @@
     <result column="d_state" jdbcType="INTEGER" property="dState" />
     <result column="e_id" jdbcType="INTEGER" property="eId" />
   </resultMap>
+
+  <select id="selectTitles" resultMap="BaseResultMap">
+    SELECT DISTINCT d_title FROM deduction
+  </select>
+
+
+  <select id="selectListByTitleAndState" resultMap="BaseResultMap">
+    SELECT * FROM deduction WHERE d_state = 1 AND d_title=#{title}
+  </select>
+
+  <select id="selectTitlesByState" resultMap="BaseResultMap">
+    SELECT DISTINCT d_title FROM deduction WHERE d_state = 1
+  </select>
 </mapper>
